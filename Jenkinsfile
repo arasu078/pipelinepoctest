@@ -23,14 +23,14 @@ pipeline {
         stage('Build') { 
             steps {
 		withEnv(['PATH+EXTRA=/usr/sbin:/usr/bin:/sbin:/bin']) {
-                sh 'mvn -B -DskipTests clean package' 
+                sh '/Users/mponnar/Documents/apache-maven-3.8.2/bin/mvn -B -DskipTests clean package' 
             }
 	  }
         }
         stage('Test') {
             steps {
 		withEnv(['PATH+EXTRA=/usr/sbin:/usr/bin:/sbin:/bin']) {
-                sh 'mvn test'
+                sh '/Users/mponnar/Documents/apache-maven-3.8.2/bin/mvn test'
             }
 	  }
         }
