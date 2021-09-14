@@ -6,6 +6,7 @@ pipeline {
     }
     stages {
         stage('Pull latest Code') { 
+		
              steps {
               // Get some code from a GitHub repository
               git 'https://github.com/pandasm/pipelinetest.git'
@@ -13,10 +14,12 @@ pipeline {
         }
 		stage('spinning up docker images'){
         	steps {
+			 withEnv(['PATH+EXTRA=/usr/sbin:/usr/bin:/sbin:/bin']) {
+     
                 	sh 'docker-compose up -d' 
              }	
         }
-     
+		}
         stage('Build') { 
             steps {
                 sh 'mvn -B -DskipTests clean package' 
