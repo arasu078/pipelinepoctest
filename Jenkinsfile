@@ -2,7 +2,7 @@ pipeline {
     agent any
 
 	environment {
-        PATH = "/usr/local/bin/docker-compose"
+        PATH = "/usr/local/bin"
     }
     stages {
         stage('Pull latest Code') { 
