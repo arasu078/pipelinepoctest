@@ -22,18 +22,24 @@ pipeline {
 		}
         stage('Build') { 
             steps {
+		withEnv(['PATH+EXTRA=/usr/sbin:/usr/bin:/sbin:/bin']) {
                 sh 'mvn -B -DskipTests clean package' 
             }
+	  }
         }
         stage('Test') {
             steps {
+		withEnv(['PATH+EXTRA=/usr/sbin:/usr/bin:/sbin:/bin']) {
                 sh 'mvn test'
             }
+	  }
         }
         stage('Destroy - After Running tests on Containers') { 
             steps {
+		withEnv(['PATH+EXTRA=/usr/sbin:/usr/bin:/sbin:/bin']) {
                 sh 'docker stop $(docker ps -a -q)'
                 sh 'docker rm $(docker ps -a -q)'
+		}
             }
         }
     }
