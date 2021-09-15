@@ -46,6 +46,7 @@ pipeline {
 post {
 	always {
 	      step([$class: 'Publisher', reportFilenamePattern: '**/testng-results.xml'])
+	publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: 'coverage', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: ''])
 	}
 }
 
