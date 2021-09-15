@@ -30,21 +30,29 @@ public class GoogleTest {
         
     }
 
-    @Test
-    public void googleTest() throws InterruptedException {
-    	driver.get("https://www.google.com");
-    	System.out.println("Opened the google application");
-        driver.findElement(By.name("q")).sendKeys("Automation");
-        System.out.println("Searching for work Automation");
-        driver.findElement(By.name("btnK")).click();
-        System.out.println("Clicked on the button");
-        
-        int size = driver.findElements(By.className("rc")).size();
-        System.out.println("Retrieving the number of links");
-        
-        Assert.assertTrue(size >= 10);
-        System.out.println("Asseted Successfull");
-    }
+ @Test
+
+    public void googleTest() throws InterruptedException {​​​​
+
+        driver.get("https://www.google.com");
+
+        System.out.println("Opened the google application");
+
+        driver.findElement(By.name("q")).sendKeys("Automation");
+
+        System.out.println("Searching for work Automation");
+
+        Thread.sleep(2000);
+
+        int size = driver.findElements(By.xpath("//*[@class='erkvQe']/li")).size();
+
+        System.out.println("Retrieving the number of links");
+
+        Assert.assertTrue(size >= 10);
+
+        System.out.println("Asseted Successfull");
+
+    }
     
     @AfterTest
     public void tearDown() throws InterruptedException {
