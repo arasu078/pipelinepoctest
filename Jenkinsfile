@@ -9,7 +9,7 @@ pipeline {
 		
              steps {
               // Get some code from a GitHub repository
-              git 'https://github.com/pandasm/pipelinetest.git'
+              git 'https://github.com/arasu078/pipelinepoctest.git'
              }
         }
 		stage('spinning up docker images'){
