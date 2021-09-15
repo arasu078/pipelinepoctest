@@ -38,6 +38,39 @@ public class GoogleTest {
         System.out.println("Searching for work Automation");
         System.out.println("Asseted Successfull");
     }
+    
+     @Test
+    public void sample1() throws InterruptedException {
+        driver.get("https://www.google.com");
+        System.out.println("Opened the google application");
+        driver.findElement(By.name("q")).sendKeys("Automation");
+        System.out.println("Searching for work Automation");
+        System.out.println("Asseted Successfull");
+    }
+     @Test
+    public void sample2() throws InterruptedException {
+        driver.get("https://www.google.com");
+        System.out.println("Opened the google application");
+        driver.findElement(By.name("q")).sendKeys("Automation");
+        System.out.println("Searching for work Automation");
+        System.out.println("Asseted Successfull");
+    }
+     @Test
+    public void sample3() throws InterruptedException {
+        driver.get("https://www.google.com");
+        System.out.println("Opened the google application");
+        driver.findElement(By.name("q")).sendKeys("Automation");
+        System.out.println("Searching for work Automation");
+        System.out.println("Asseted Successfull");
+    }
+     @Test
+    public void sample4() throws InterruptedException {
+        driver.get("https://www.google.com");
+        System.out.println("Opened the google application");
+        driver.findElement(By.name("q")).sendKeys("Automation");
+        System.out.println("Searching for work Automation");
+        System.out.println("Asseted Successfull");
+    }
     @AfterTest
     public void tearDown() throws InterruptedException {
         driver.quit();
