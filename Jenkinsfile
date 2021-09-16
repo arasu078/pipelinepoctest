@@ -1,59 +1,61 @@
-// Multi-branch pipeline. Build once a day from a "master" branch only
-CRON_SETTINGS = BRANCH_NAME == "master" ? '''*/2 * * * *'''
-
 pipeline {
     agent any
-
-	environment {
+    
+    environment {
         PATH = "/usr/local/bin"
     }
-	triggers {
-    cron(CRON_SETTINGS)
-  }
+    
     stages {
-        stage('Pull latest Code') { 
-		
-             steps {
-              // Get some code from a GitHub repository
-              git 'https://github.com/arasu078/pipelinepoctest.git'
-             }
-        }
-		stage('spinning up docker images'){
-        	steps {
-			 withEnv(['PATH+EXTRA=/usr/sbin:/usr/bin:/sbin:/bin']) {
-     
-                	sh 'docker-compose up -d' 
-             }	
-        }
-		}
-        stage('Build') { 
+        // GIT CHECKOUT
+        stage('Pull latest Code') {
             steps {
-		withEnv(['PATH+EXTRA=/usr/sbin:/usr/bin:/sbin:/bin']) {
-                sh '/Users/mponnar/Documents/apache-maven-3.8.2/bin/mvn -B -DskipTests clean package' 
+                // Get some code from a GitHub repository
+                git 'https://github.com/arasu078/pipelinepoctest.git'
             }
-	  }
         }
+        // DOCKER SPINNING
+        stage('spinning up docker images'){
+            steps {
+                withEnv(['PATH+EXTRA=/usr/sbin:/usr/bin:/sbin:/bin']) {
+                    
+                    sh 'docker-compose up -d'
+                }
+            }
+        }
+        // BUILDING
+        stage('Build') {
+            steps {
+                withEnv(['PATH+EXTRA=/usr/sbin:/usr/bin:/sbin:/bin']) {
+                    sh '/Users/mponnar/Documents/apache-maven-3.8.2/bin/mvn -B -DskipTests clean package'
+                }
+            }
+        }
+        // TEST
         stage('Test') {
             steps {
-		withEnv(['PATH+EXTRA=/usr/sbin:/usr/bin:/sbin:/bin']) {
-                sh '/Users/mponnar/Documents/apache-maven-3.8.2/bin/mvn test'
+                withEnv(['PATH+EXTRA=/usr/sbin:/usr/bin:/sbin:/bin']) {
+                    sh '/Users/mponnar/Documents/apache-maven-3.8.2/bin/mvn test'
+                }
             }
-	  }
         }
-        stage('Destroy - After Running tests on Containers') { 
+        // DESTROY DOCKER
+        stage('Destroy - After Running tests on Containers') {
             steps {
-		withEnv(['PATH+EXTRA=/usr/sbin:/usr/bin:/sbin:/bin']) {
-                sh 'docker stop $(docker ps -a -q)'
-                sh 'docker rm $(docker ps -a -q)'
-		}
+                withEnv(['PATH+EXTRA=/usr/sbin:/usr/bin:/sbin:/bin']) {
+                    sh 'docker stop $(docker ps -a -q)'
+                    sh 'docker rm $(docker ps -a -q)'
+                }
             }
         }
     }
-post {
-	always {
-	      step([$class: 'Publisher', reportFilenamePattern: '**/testng-results.xml'])
-		publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: '', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: ''])
-	}
-}
-
+    // POST BUILD ACTIONS
+    post {
+        always {
+            // REPORT GENERATION
+            step([$class: 'Publisher', reportFilenamePattern: '**/testng-results.xml'])
+            
+            publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: '', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: ''])
+        }
+    }
+    
 }
