@@ -1,9 +1,15 @@
+// Multi-branch pipeline. Build once a day from a "master" branch only
+CRON_SETTINGS = BRANCH_NAME == "master" ? '''*/2 * * * *'''
+
 pipeline {
     agent any
 
 	environment {
         PATH = "/usr/local/bin"
     }
+	triggers {
+    cron(CRON_SETTINGS)
+  }
     stages {
         stage('Pull latest Code') { 
 		
