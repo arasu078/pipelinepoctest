@@ -3,7 +3,7 @@ pipeline {
     agent any
     
     triggers {
-        cron('* * * * *')
+        cron('0 */3 * * *')
     }
     environment {
         PATH = "/usr/local/bin"
