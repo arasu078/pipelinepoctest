@@ -1,5 +1,3 @@
-// Build once a day with a parameter
-CRON_SETTINGS = '''H H * * * % ENV=DEV''' : ""
 
 pipeline {
     agent any
