@@ -1,6 +1,12 @@
+// Build once a day with a parameter
+CRON_SETTINGS = '''H H * * * % ENV=DEV''' : ""
+
 pipeline {
     agent any
     
+    triggers {
+    parameterizedCron('''H H * * * % ENV=master''' : "")
+  }
     environment {
         PATH = "/usr/local/bin"
     }
