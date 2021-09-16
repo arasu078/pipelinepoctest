@@ -5,7 +5,7 @@ pipeline {
     agent any
     
     triggers {
-    parameterizedCron('''H H * * *''')
+    parameterizedCron('''*/5 * * * *''')
   }
     environment {
         PATH = "/usr/local/bin"
