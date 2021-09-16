@@ -3,7 +3,7 @@ pipeline {
     agent any
     
     triggers {
-    parameterizedCron('''*/1 * * * *''')
+    parameterizedCron('''* * * * *''')
   }
     environment {
         PATH = "/usr/local/bin"
